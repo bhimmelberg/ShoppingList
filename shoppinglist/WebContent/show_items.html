@@ -1,0 +1,59 @@
+<html>
+<head>
+<style>
+header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:5px;	 
+}
+nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:100px;
+    float:left;
+    padding:5px;	      
+}
+section {
+    width:350px;
+    float:left;
+    padding:10px;	 	 
+}
+footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px;	 	 
+}
+</style>
+</head>
+
+<body>
+<header>
+<h1> Items </h1>
+</header>
+
+<nav>
+<a href="/shoppinglist/add_item.html">Add Items</a> <br>
+</nav>
+
+<nav>
+<a href="/shoppinglist/delete_items.html">Delete Items</a> <br>
+</nav>
+
+<section>
+	<h1>See List</h1>
+	
+	<form action="ShowItems" method="POST">
+		<input type="submit" value="My List" />
+	</form>
+
+</section>
+
+<footer>
+Copyright
+</footer>
+</body>
+</html>

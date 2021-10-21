@@ -1,6 +1,10 @@
-
-
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,28 +17,52 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/ShoppingHimmelberg")
 public class ShoppingHimmelberg extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+	static String url = "jdbc:mysql://ec2-3-135-240-102.us-east-2.compute.amazonaws.com:3306/ShoppingList?enabledTLSProtocols=TLSv1.2";
+	static String user = "bhimmelremote";
+	static String password = "Ellamae2001!";
+	static Connection connection = null;
+	
+
     public ShoppingHimmelberg() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Hello World!");
+		response.setContentType("text/html;charset=UTF-8");
+	      try {
+	         Class.forName("com.mysql.cj.jdbc.Driver"); //old:com.mysql.jdbc.Driver
+	      } catch (ClassNotFoundException e) {
+	         e.printStackTrace();
+	         return;
+	      }
+	      connection = null;
+	      try {
+	         connection = DriverManager.getConnection(url, user, password);
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	         return;
+	      }
+	      try {
+	         String selectSQL = "SELECT * FROM employee";
+	         PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+	         ResultSet rs = preparedStatement.executeQuery();
+	         while (rs.next()) {
+	            String id = rs.getString("ID");
+	            String age = rs.getString("age");
+	            String name = rs.getString("name");
+	            response.getWriter().append("USER ID: " + id + ", ");
+	            response.getWriter().append("AGE: " + age + ", ");
+	            response.getWriter().append("NAME: " + name + "<br>");
+	         }
+	         
+	         preparedStatement.close();
+	         connection.close();
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
