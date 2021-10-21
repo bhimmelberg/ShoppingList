@@ -40,10 +40,13 @@ public class ShowItems extends HttpServlet {
       try {
          ShoppingDB.getDBConnection();
          connection = ShoppingDB.connection;
+         //Order the table alphabetically based on store
          String selectSQL = "SELECT * FROM list ORDER BY Store";
          preparedStatement = connection.prepareStatement(selectSQL);
          ResultSet rs = preparedStatement.executeQuery();
+         //Variable to hold total cost of specific item
          double itemCost = 0.0;
+         //Variable to hold cost of all items
          double totalCost = 0.0;
          
          while (rs.next()) {
@@ -53,7 +56,9 @@ public class ShowItems extends HttpServlet {
             String department = rs.getString("department").trim();
             String store = rs.getString("store").trim();
             double myPrice = Double.parseDouble(price);
+            //Get cost of current item
             itemCost = myPrice * quantity;
+            //Add to total cost
             totalCost = totalCost + itemCost;
             
             out.println("Item: " + item + " | ");

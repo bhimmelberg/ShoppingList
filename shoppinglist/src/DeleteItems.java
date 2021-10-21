@@ -20,6 +20,7 @@ public class DeleteItems extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       String item = request.getParameter("item");
       Connection connection = null;
+      //Delete the item that the user chooses to delete based on name
       String insertSql = " DELETE FROM list WHERE item = (?)";
 
       try {
